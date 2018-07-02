@@ -1,0 +1,100 @@
+#######################
+##       APPLE       ##
+#######################
+
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+
+#######################
+##      WINDOWS      ##
+#######################
+
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+######################
+##     QUARTUS      ##
+######################
+
+# ignore Quartus II generated folders
+*_sim
+db
+greybox_tmp
+incremental_db
+simulation
+testbench
+timing
+
+# ignore Quartus II generated files
+*_generation_script*
+*_inst.vhd
+*.bak
+*.cmp
+*.done
+*.eqn
+*.hex
+*.html
+*.jdi
+*.jpg
+*.mif
+*.pin
+*.pof
+*.ptf.*
+*.qar
+*.qarlog
+*.qws
+*.rpt
+*.smsg
+*.sof
+*.sopc_builder
+*.summary
+*.tcl
+*.txt # Explicitly add any text files used
+*~
+*example*
+*sopc_*
+PLLJ_PLLSPE_INFO.txt # The generated PLL specification file
