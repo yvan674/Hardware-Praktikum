@@ -359,28 +359,6 @@ agreement for further details.
 		(rectangle (rect 16 16 216 64))
 	)
 )
-(symbol
-	(rect 616 360 864 440)
-	(text "targetHeading" (rect 5 0 73 12)(font "Arial" ))
-	(text "th1" (rect 8 64 23 76)(font "Arial" ))
-	(port
-		(pt 0 32)
-		(input)
-		(text "heading[8..0]" (rect 0 0 63 12)(font "Arial" ))
-		(text "heading[8..0]" (rect 21 27 84 39)(font "Arial" ))
-		(line (pt 0 32)(pt 16 32)(line_width 3))
-	)
-	(port
-		(pt 248 32)
-		(output)
-		(text "target_heading_out[8..0]" (rect 0 0 119 12)(font "Arial" ))
-		(text "target_heading_out[8..0]" (rect 127 27 227 39)(font "Arial" ))
-		(line (pt 248 32)(pt 232 32)(line_width 3))
-	)
-	(drawing
-		(rectangle (rect 16 16 232 64))
-	)
-)
 (connector
 	(pt 1112 88)
 	(pt 1152 88)
@@ -405,18 +383,6 @@ agreement for further details.
 (connector
 	(pt 1352 136)
 	(pt 1352 256)
-)
-(connector
-	(pt 1352 256)
-	(pt 592 256)
-)
-(connector
-	(pt 592 256)
-	(pt 592 168)
-)
-(connector
-	(pt 592 168)
-	(pt 616 168)
 )
 (connector
 	(pt 856 184)
@@ -527,55 +493,6 @@ agreement for further details.
 	(pt 544 120)
 )
 (connector
-	(pt 528 136)
-	(pt 528 392)
-	(bus)
-)
-(connector
-	(pt 528 392)
-	(pt 616 392)
-	(bus)
-)
-(connector
-	(pt 512 136)
-	(pt 528 136)
-	(bus)
-)
-(connector
-	(pt 528 136)
-	(pt 616 136)
-	(bus)
-)
-(connector
-	(pt 864 392)
-	(pt 880 392)
-	(bus)
-)
-(connector
-	(pt 880 392)
-	(pt 880 272)
-	(bus)
-)
-(connector
-	(pt 880 272)
-	(pt 576 272)
-	(bus)
-)
-(connector
-	(pt 576 272)
-	(pt 576 152)
-	(bus)
-)
-(connector
-	(pt 576 152)
-	(pt 616 152)
-	(bus)
-)
-(connector
-	(pt 208 40)
-	(pt 216 40)
-)
-(connector
 	(pt 216 40)
 	(pt 224 40)
 )
@@ -583,7 +500,22 @@ agreement for further details.
 	(pt 224 40)
 	(pt 544 40)
 )
+(connector
+	(pt 592 256)
+	(pt 1352 256)
+)
+(connector
+	(pt 592 256)
+	(pt 592 168)
+)
+(connector
+	(pt 592 168)
+	(pt 616 168)
+)
+(connector
+	(pt 512 136)
+	(pt 616 136)
+	(bus)
+)
 (junction (pt 224 40))
 (junction (pt 544 40))
-(junction (pt 216 40))
-(junction (pt 528 136))
