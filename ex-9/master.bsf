@@ -1,0 +1,156 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 2016  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Intel and sold by Intel or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+*/
+(header "symbol" (version "1.1"))
+(symbol
+	(rect 16 16 264 256)
+	(text "master" (rect 5 0 33 12)(font "Arial" ))
+	(text "inst" (rect 8 224 20 236)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk_50" (rect 0 0 25 12)(font "Arial" ))
+		(text "clk_50" (rect 21 27 46 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32)(line_width 1))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "decoderDone" (rect 0 0 53 12)(font "Arial" ))
+		(text "decoderDone" (rect 21 43 74 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 1))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "decoderAddr[4..0]" (rect 0 0 74 12)(font "Arial" ))
+		(text "decoderAddr[4..0]" (rect 21 59 95 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64)(line_width 3))
+	)
+	(port
+		(pt 0 80)
+		(input)
+		(text "decoderData[31..0]" (rect 0 0 74 12)(font "Arial" ))
+		(text "decoderData[31..0]" (rect 21 75 95 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80)(line_width 3))
+	)
+	(port
+		(pt 0 96)
+		(input)
+		(text "decoderWe" (rect 0 0 47 12)(font "Arial" ))
+		(text "decoderWe" (rect 21 91 68 103)(font "Arial" ))
+		(line (pt 0 96)(pt 16 96)(line_width 1))
+	)
+	(port
+		(pt 0 112)
+		(input)
+		(text "decryptorDone" (rect 0 0 60 12)(font "Arial" ))
+		(text "decryptorDone" (rect 21 107 81 119)(font "Arial" ))
+		(line (pt 0 112)(pt 16 112)(line_width 1))
+	)
+	(port
+		(pt 0 128)
+		(input)
+		(text "decryptorAddr[4..0]" (rect 0 0 81 12)(font "Arial" ))
+		(text "decryptorAddr[4..0]" (rect 21 123 102 135)(font "Arial" ))
+		(line (pt 0 128)(pt 16 128)(line_width 3))
+	)
+	(port
+		(pt 0 144)
+		(input)
+		(text "decryptorData[31..0]" (rect 0 0 81 12)(font "Arial" ))
+		(text "decryptorData[31..0]" (rect 21 139 102 151)(font "Arial" ))
+		(line (pt 0 144)(pt 16 144)(line_width 3))
+	)
+	(port
+		(pt 0 160)
+		(input)
+		(text "decryptorWe" (rect 0 0 54 12)(font "Arial" ))
+		(text "decryptorWe" (rect 21 155 75 167)(font "Arial" ))
+		(line (pt 0 160)(pt 16 160)(line_width 1))
+	)
+	(port
+		(pt 0 176)
+		(input)
+		(text "serialAddr[4..0]" (rect 0 0 62 12)(font "Arial" ))
+		(text "serialAddr[4..0]" (rect 21 171 83 183)(font "Arial" ))
+		(line (pt 0 176)(pt 16 176)(line_width 3))
+	)
+	(port
+		(pt 0 192)
+		(input)
+		(text "ramq[31..0]" (rect 0 0 44 12)(font "Arial" ))
+		(text "ramq[31..0]" (rect 21 187 65 199)(font "Arial" ))
+		(line (pt 0 192)(pt 16 192)(line_width 3))
+	)
+	(port
+		(pt 248 32)
+		(output)
+		(text "decryptorq[31..0]" (rect 0 0 67 12)(font "Arial" ))
+		(text "decryptorq[31..0]" (rect 160 27 227 39)(font "Arial" ))
+		(line (pt 248 32)(pt 232 32)(line_width 3))
+	)
+	(port
+		(pt 248 48)
+		(output)
+		(text "decryptorE" (rect 0 0 46 12)(font "Arial" ))
+		(text "decryptorE" (rect 181 43 227 55)(font "Arial" ))
+		(line (pt 248 48)(pt 232 48)(line_width 1))
+	)
+	(port
+		(pt 248 64)
+		(output)
+		(text "serialq[31..0]" (rect 0 0 48 12)(font "Arial" ))
+		(text "serialq[31..0]" (rect 179 59 227 71)(font "Arial" ))
+		(line (pt 248 64)(pt 232 64)(line_width 3))
+	)
+	(port
+		(pt 248 80)
+		(output)
+		(text "serialE" (rect 0 0 27 12)(font "Arial" ))
+		(text "serialE" (rect 200 75 227 87)(font "Arial" ))
+		(line (pt 248 80)(pt 232 80)(line_width 1))
+	)
+	(port
+		(pt 248 96)
+		(output)
+		(text "ramAddr[4..0]" (rect 0 0 59 12)(font "Arial" ))
+		(text "ramAddr[4..0]" (rect 168 91 227 103)(font "Arial" ))
+		(line (pt 248 96)(pt 232 96)(line_width 3))
+	)
+	(port
+		(pt 248 112)
+		(output)
+		(text "ramData[31..0]" (rect 0 0 59 12)(font "Arial" ))
+		(text "ramData[31..0]" (rect 168 107 227 119)(font "Arial" ))
+		(line (pt 248 112)(pt 232 112)(line_width 3))
+	)
+	(port
+		(pt 248 128)
+		(output)
+		(text "ramWe" (rect 0 0 31 12)(font "Arial" ))
+		(text "ramWe" (rect 196 123 227 135)(font "Arial" ))
+		(line (pt 248 128)(pt 232 128)(line_width 1))
+	)
+	(drawing
+		(rectangle (rect 16 16 232 224)(line_width 1))
+	)
+)

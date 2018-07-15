@@ -1,0 +1,121 @@
+# -------------------------------------------------------------------------- #
+#
+# Copyright (C) 2016  Intel Corporation. All rights reserved.
+# Your use of Intel Corporation's design tools, logic functions 
+# and other software and tools, and its AMPP partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Intel Program License 
+# Subscription Agreement, the Intel Quartus Prime License Agreement,
+# the Intel MegaCore Function License Agreement, or other 
+# applicable license agreement, including, without limitation, 
+# that your use is for the sole purpose of programming logic 
+# devices manufactured by Intel and sold by Intel or its 
+# authorized distributors.  Please refer to the applicable 
+# agreement for further details.
+#
+# -------------------------------------------------------------------------- #
+#
+# Quartus Prime
+# Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
+# Date created = 15:27:06  July 18, 2017
+#
+# -------------------------------------------------------------------------- #
+#
+# Notes:
+#
+# 1) The default values for assignments are stored in the file:
+#		Competition_assignment_defaults.qdf
+#    If this file doesn't exist, see file:
+#		assignment_defaults.qdf
+#
+# 2) Altera recommends that you do not modify this file. This
+#    file is updated automatically by the Quartus Prime software
+#    and any changes you make may be lost or overwritten.
+#
+# -------------------------------------------------------------------------- #
+
+
+set_global_assignment -name FAMILY "Cyclone IV E"
+set_global_assignment -name DEVICE EP4CE22F17C6
+set_global_assignment -name TOP_LEVEL_ENTITY decryptor
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 16.1.0
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "15:27:06  JULY 18, 2017"
+set_global_assignment -name LAST_QUARTUS_VERSION "16.1.0 Lite Edition"
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 1
+set_global_assignment -name NOMINAL_CORE_SUPPLY_VOLTAGE 1.2V
+set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (VHDL)"
+set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT VHDL -section_id eda_simulation
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
+set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH decryptor_vhd_tst -section_id eda_simulation
+set_global_assignment -name EDA_TEST_BENCH_NAME ButtonsKey_vhd_tst -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME i1 -section_id ButtonsKey_vhd_tst
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME ButtonsKey_vhd_tst -section_id ButtonsKey_vhd_tst
+set_location_assignment PIN_A10 -to ADC_CS
+set_location_assignment PIN_B10 -to ADC_DIN
+set_location_assignment PIN_A9 -to ADC_DOUT
+set_location_assignment PIN_R8 -to clk_50
+set_location_assignment PIN_B14 -to SCLK
+set_location_assignment PIN_D9 -to lcd_data[7]
+set_location_assignment PIN_C9 -to lcd_data[6]
+set_location_assignment PIN_E10 -to lcd_data[5]
+set_location_assignment PIN_E11 -to lcd_data[4]
+set_location_assignment PIN_B11 -to lcd_data[3]
+set_location_assignment PIN_C11 -to lcd_data[2]
+set_location_assignment PIN_D11 -to lcd_data[1]
+set_location_assignment PIN_A12 -to lcd_data[0]
+set_location_assignment PIN_B12 -to lcd_e
+set_location_assignment PIN_D12 -to lcd_rs
+set_global_assignment -name EDA_TEST_BENCH_NAME decryptor_vhd_tst -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME i1 -section_id decryptor_vhd_tst
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME decryptor_vhd_tst -section_id decryptor_vhd_tst
+set_global_assignment -name EDA_TEST_BENCH_NAME checker_vhd_tst -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME i1 -section_id checker_vhd_tst
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME checker_vhd_tst -section_id checker_vhd_tst
+set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "1500 us" -section_id decryptor_vhd_tst
+set_global_assignment -name EDA_TEST_BENCH_NAME debugBlock_vhd_tst -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME i1 -section_id debugBlock_vhd_tst
+set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "1000 ns" -section_id debugBlock_vhd_tst
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME debugBlock_vhd_tst -section_id debugBlock_vhd_tst
+set_global_assignment -name EDA_TEST_BENCH_NAME alphabet_vhd_tst -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME i1 -section_id alphabet_vhd_tst
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME alphabet_vhd_tst -section_id alphabet_vhd_tst
+set_global_assignment -name VHDL_TEST_BENCH_FILE simulation/modelsim/serialWriter.vht
+set_global_assignment -name VHDL_FILE VHDL/serialWriter.vhd
+set_global_assignment -name VHDL_TEST_BENCH_FILE simulation/modelsim/alphabet.vht
+set_global_assignment -name VHDL_TEST_BENCH_FILE simulation/modelsim/debugBlock.vht
+set_global_assignment -name VHDL_TEST_BENCH_FILE simulation/modelsim/checker.vht
+set_global_assignment -name VHDL_TEST_BENCH_FILE simulation/modelsim/decryptor.vht
+set_global_assignment -name VHDL_FILE VHDL/dataToLcd_mod.vhd
+set_global_assignment -name VHDL_TEST_BENCH_FILE simulation/modelsim/ButtonsKey.vht
+set_global_assignment -name VHDL_FILE VHDL/lcd_driver.vhd
+set_global_assignment -name VHDL_FILE VHDL/binaryToDecimal.vhd
+set_global_assignment -name VHDL_FILE VHDL/adcReader.vhd
+set_global_assignment -name VHDL_FILE VHDL/ButtonsKey.vhd
+set_global_assignment -name VHDL_FILE VHDL/alphabet.vhd
+set_global_assignment -name VHDL_FILE VHDL/decryptor.vhd
+set_global_assignment -name BDF_FILE Competition.bdf
+set_global_assignment -name VHDL_FILE VHDL/checker.vhd
+set_global_assignment -name BDF_FILE debugBlock.bdf
+set_global_assignment -name CDF_FILE output_files/Chain1.cdf
+set_location_assignment PIN_F13 -to serial_out
+set_global_assignment -name EDA_TEST_BENCH_NAME serialWriter_vhd_tst -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME i1 -section_id serialWriter_vhd_tst
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME serialWriter_vhd_tst -section_id serialWriter_vhd_tst
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name EDA_TEST_BENCH_FILE simulation/modelsim/ButtonsKey.vht -section_id ButtonsKey_vhd_tst
+set_global_assignment -name EDA_TEST_BENCH_FILE simulation/modelsim/decryptor.vht -section_id decryptor_vhd_tst
+set_global_assignment -name EDA_TEST_BENCH_FILE simulation/modelsim/checker.vht -section_id checker_vhd_tst
+set_global_assignment -name EDA_TEST_BENCH_FILE simulation/modelsim/debugBlock.vht -section_id debugBlock_vhd_tst
+set_global_assignment -name EDA_TEST_BENCH_FILE simulation/modelsim/alphabet.vht -section_id alphabet_vhd_tst
+set_global_assignment -name EDA_TEST_BENCH_FILE simulation/modelsim/serialWriter.vht -section_id serialWriter_vhd_tst
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

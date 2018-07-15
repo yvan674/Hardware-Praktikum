@@ -1,0 +1,7 @@
+{
+	"common_dir" : "/usr/local/scratch/temp/Ultrasound_controller_ex06_restored/",
+	"acds_version" : "Version 15.0.0",
+	"platform" : "linux",
+	"os" : "Ubuntu 14.04.4",
+	"qpf" : "Ultrasound_controller.qpf"
+}

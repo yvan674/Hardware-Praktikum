@@ -1,0 +1,252 @@
+-- decryptor
+-- runs the decryption algorithm
+
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity decryptor is port(
+	clk_50 : in std_logic;
+	keyIn : in std_logic_vector(31 downto 0);
+	dataIn : in std_logic_vector(31 downto 0);
+	correctKey : in std_logic;
+	rdy : in std_logic;
+
+
+	decryptedOut : out std_logic_vector(31 downto 0) := "UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU";
+	state_out : out std_logic_vector(2 downto 0);
+	sub_block : out std_logic_vector(3 downto 0)
+
+);
+end decryptor;
+
+
+architecture behavior of decryptor is
+	-- state definition
+	TYPE state_type IS (init, substitute, shift, addRound, send);
+	SIGNAL state : state_type := init;
+
+	-- flag signals to indicate move to next state
+	SIGNAL subDone : boolean;
+	SIGNAL shiftDone : boolean;
+	SIGNAL addDone : boolean;
+
+	-- decoding signals
+	SIGNAL currentTemp : std_logic_vector(31 DOWNTO 0);
+	SIGNAL subBlock : integer RANGE 0 TO 8 := 0;
+	SIGNAL subTemp : std_logic_vector(31 DOWNTO 0);
+	SIGNAL shiftBlock: integer RANGE 0 TO 4 := 0;
+	SIGNAL shiftTemp : std_logic_vector(31 DOWNTO 0);
+
+	-- round signals
+	TYPE roundKey IS ARRAY (0 to 3) OF std_logic_vector(31 DOWNTO 0);
+	CONSTANT roundKeyArray : roundKey := (
+		"11110111100100011001111001001000",
+		"11000110010011001010001101010111",
+		"10111001100111111011011111010100",
+		"01100111001010110011000011101101"
+	);
+	SIGNAL roundTempKey : std_logic_vector(31 DOWNTO 0);
+	SIGNAL rotatedKey : std_logic_vector(31 DOWNTO 0);
+	SIGNAL newRoundKey : std_logic_vector(31 DOWNTO 0);
+	SIGNAL addTemp : std_logic_vector(31 DOWNTO 0);
+	SIGNAL roundNumber : integer RANGE 0 TO 3 := 0;
+
+	-- initial code signal:
+	CONSTANT initialCode : std_logic_vector(31 DOWNTO 0) :=
+		"11100111101101101111101111110011";
+	SIGNAL initial_check : boolean := true;
+
+begin
+
+	sub_block <= std_logic_vector(to_unsigned(subBlock, 4));
+	-- state machine to decrypt bits
+	PROCESS(clk_50)
+	BEGIN
+		IF (clk_50'EVENT AND clk_50 = '1') THEN
+			CASE state IS
+				WHEN init =>
+					IF dataIn /= "UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU" AND correctKey = '1' THEN
+						initial_check <= false;
+						state <= substitute;
+					ELSIF correctKey = '0' THEN
+						initial_check <= true;
+						state <= substitute;
+					ELSE
+						state <= init;
+					END IF;
+
+				WHEN substitute =>
+					IF subDone = true THEN
+						state <= shift;
+					ELSE
+						state <= substitute;
+					END IF;
+
+				WHEN shift =>
+					IF shiftDone = true THEN
+						state <= addRound;
+					ELSE
+						state <= shift;
+					END IF;
+
+				WHEN addRound =>
+					IF addDone = true THEN
+						IF roundNumber /= 3 THEN
+							state <= init;
+						ELSE
+							state <= send;
+						END IF;
+					ELSE
+						state <= addRound;
+					END IF;
+
+				WHEN send =>
+					IF (rdy = '1') THEN
+						state <= init;
+					ELSE
+						state <= send;
+					END IF;
+			END CASE;
+		END IF;
+	END PROCESS;
+
+PROCESS(state, roundNumber, dataIn, keyIn, addTemp, subBlock, currentTemp)
+BEGIN
+	CASE state IS
+		WHEN init =>
+			-- initialize everything
+			subDone <= false;
+			shiftDone <= false;
+			addDone <= false;
+			IF roundNumber = 0 THEN
+				IF initial_check THEN
+					currentTemp <= initialCode;
+				ELSE
+					currentTemp <= dataIn;
+				END IF;
+				roundTempKey <= keyIn;
+			ELSE
+				currentTemp <= addTemp;
+			END IF;
+
+			-- debug
+			state_out <= "000";
+
+		WHEN substitute =>
+			shiftDone <= false;
+			addDone <= false;
+			IF (subBlock = 8) THEN
+				subDone <= true;
+			ELSE
+				subDone <= false;
+
+				-- sub operations
+				IF currentTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) = "0000" THEN
+					subTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) <= "1010";
+				ELSIF currentTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) = "0001" THEN
+					subTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) <= "1100";
+				ELSIF currentTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) = "0010" THEN
+					subTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) <= "1000";
+				ELSIF currentTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) = "0011" THEN
+					subTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) <= "1111";
+				ELSIF currentTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) = "0100" THEN
+					subTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) <= "1110";
+				ELSIF currentTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) = "0101" THEN
+					subTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) <= "0110";
+				ELSIF currentTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) = "0110" THEN
+					subTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) <= "0011";
+				ELSIF currentTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) = "0111" THEN
+					subTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) <= "1011";
+				ELSIF currentTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) = "1000" THEN
+					subTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) <= "0111";
+				ELSIF currentTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) = "1001" THEN
+					subTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) <= "0101";
+				ELSIF currentTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) = "1010" THEN
+					subTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) <= "0000";
+				ELSIF currentTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) = "1011" THEN
+					subTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) <= "0010";
+				ELSIF currentTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) = "1100" THEN
+					subTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) <= "1001";
+				ELSIF currentTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) = "1101" THEN
+					subTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) <= "0001";
+				ELSIF currentTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) = "1110" THEN
+					subTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) <= "0100";
+				ELSIF currentTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) = "1111" THEN
+					subTemp(31 - (subBlock * 4) DOWNTO 28 - (subBlock * 4)) <= "1101";
+				END IF;
+				subBlock <= subBlock + 1;
+			END IF;
+
+			-- debug
+			state_out <= "001";
+
+		WHEN shift =>
+			subDone <= false;
+			subBlock <= 0;
+			IF shiftBlock = 4 THEN
+				shiftDone <= true;
+			ELSE
+				shiftDone <= false;
+
+				IF shiftBlock = 0 THEN
+					shiftTemp(31 DOWNTO 0) <= subTemp(31 DOWNTO 0);
+				ELSIF shiftBlock = 1 THEN
+					shiftTemp(23 DOWNTO 18) <= subTemp(21 DOWNTO 16);
+					shiftTemp(17 DOWNTO 16) <= subTemp(23 DOWNTO 22);
+				ELSIF shiftBlock = 2 THEN
+					shiftTemp(15 DOWNTO 12) <= subTemp(11 DOWNTO 8);
+					shiftTemp(11 DOWNTO 8) <= subTemp(15 DOWNTO 12);
+				ELSIF shiftBlock = 3 THEN
+					shiftTemp(7 DOWNTO 6) <= subTemp(1 DOWNTO 0);
+					shiftTemp(5 DOWNTO 0) <= subTemp(7 DOWNTO 2);
+				END IF;
+			shiftBlock <= shiftBlock + 1;
+			END IF;
+
+			-- debug
+			state_out <= "010";
+
+		WHEN addRound =>
+			subDone <= false;
+			shiftBlock <= 0;
+			shiftDone <= false;
+
+			-- rotate by 8
+			rotatedKey(31 DOWNTO 8) <= roundTempKey(23 DOWNTO 0);
+			rotatedKey(7 DOWNTO 0) <= roundTempKey(31 DOWNTO 24);
+
+			-- xor with round key
+			FOR i IN 0 TO (rotatedKey'length - 1) LOOP
+				newRoundKey(i) <= rotatedKey(i) xor roundKeyArray(roundNumber)(i);
+			END LOOP;
+
+			-- xor round key with current line
+			FOR i in 0 to (shiftTemp'length - 1) LOOP
+				addTemp(i) <= shiftTemp(i) xor newRoundKey(i);
+			END LOOP;
+
+			IF roundNumber < 3 THEN
+				roundNumber <= roundNumber + 1;
+			END IF;
+			addDone <= true;
+
+			-- debug
+			state_out <= "011";
+
+		WHEN send =>
+			subDone <= false;
+			shiftDone <= false;
+			addDone <= false;
+			roundNumber <= 0;
+
+			-- debug
+			state_out <= "100";
+
+			-- actual sending
+			decryptedOut <= addTemp;
+	END CASE;
+END PROCESS;
+
+end behavior;
